@@ -2,10 +2,12 @@ import kociemba
 import random
 
 def outerMove(cube, type, axis_list, face):
+    # Get colors for the moving pieces
     axis_list_values = []
     for val in axis_list:
         axis_list_values.append(cube[val[0]][val[1]])
-   
+
+    # Clockwise order of pieces on the face being turned
     face_list = [0, 1, 2, 5, 8, 7, 6, 3]
     face_list_values = []
     for val in face_list:
@@ -48,10 +50,12 @@ def outerMove(cube, type, axis_list, face):
     return cube
 
 def sliceMove(cube, type, slice_list):
+    # Get colors for moving pieces
     slice_list_values = []
     for val in slice_list:
         slice_list_values.append(cube[val[0]][val[1]])
-   
+
+    # 1 = normal, 2 = prime, 3 = double
     if(type == 1):
         for i in range (0, len(slice_list)):
             if(i + 3 > 11):
@@ -90,7 +94,9 @@ def invertScramble(move_list):
     return move_list
 
 def executeAlg(cube, move_list):
+    # Execute each move in order
     for move in move_list:
+        # Account for AUF notation
         move = move.replace('(', '')
         move = move.replace(')', '')
         match move:
@@ -241,13 +247,18 @@ def executeAlg(cube, move_list):
     return cube
 
 def generateScramble(move_list):
+    # Create solved cube
     cube = [['U', 'U', 'U', 'U', 'U', 'U', 'U', 'U', 'U'],
             ['R', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R'],
             ['F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F'],
             ['D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D'],
             ['L', 'L', 'L', 'L', 'L', 'L', 'L', 'L', 'L'],
             ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B']]
+
+    # Set cube to selected case
     cube = executeAlg(cube, move_list)
+
+    # Find solution and inverse it to get the scramble
     compressed_cube = ''
     for face in cube:
         compressed_cube += ''.join(face)
@@ -255,19 +266,18 @@ def generateScramble(move_list):
     return invertScramble(solution.split(' '))
 
 def selectCase(algSet, selectedCases):
-
     # List of all available algorithms
     algs = {
         'lxs': {
-        'UFR': ["(U2) R U R2 U' R' U R", "(U) R U D' R U R' D R'", "(U') R U R U' R2 U' R2 U R2", "(U2) R D' R U R' D R'", "(U) R' U2 R U2 R", "R' U' R U' R U2 R", "(U) R U2 R2 U' R U R2 U' R'", "R U' R2 U' R U R U2 R U R'", "R2 U' R2 U2 R2 U R2", "R U' R' U R U' R2 U' R U R", "(U') R' U' R U' R' U R2 U R", "R U' R2 U2 R U2 R2 U' R'", "R U2 R' U R' U2 R U2 R2 U' R'", "R U R2 U2’ R' U2 R2 U' R'", "R U' R' U R U2 R2 U' R U R", "R U R' U R' U' R U R2 U R'", "(U2) R U R' U R' U' R2 U R", "(U) R U2 R' U R' U' R2 U R", "(U2) R' U2 R U2 R U' R U R'", "R U' R' U R' U' R U R", "(U') R U R' U R' U' R U' R U2 R", "(U2) R U R2 U' R U R2 U' R'", "R S' R U' R' f R' F' R U' R'", "(U) R' U' R U' R U R' U' R U2 R", "(U) R' U2 R' U2 R2 U2 R'", "(U2) R2 U2 R' U' R U' R2", "(U2) R U R' U R U' R'", "(U) R U2 R' U R U' R'", "R U2 R' U' R U R'", "(U) R U' R' U R U' R' U R U' R'"],
-        'RFU': [],
-        'FUR': [],
-        'DFR': [],
-        'RDF': [],
-        'FRD': []
+            'UFR': ["(U2) R U R2 U' R' U R", "(U) R U D' R U R' D R'", "(U') R U R U' R2 U' R2 U R2", "(U2) R D' R U R' D R'", "(U) R' U2 R U2 R", "R' U' R U' R U2 R", "(U) R U2 R2 U' R U R2 U' R'", "R U' R2 U' R U R U2 R U R'", "R2 U' R2 U2 R2 U R2", "R U' R' U R U' R2 U' R U R", "(U') R' U' R U' R' U R2 U R", "R U' R2 U2 R U2 R2 U' R'", "R U2 R' U R' U2 R U2 R2 U' R'", "R U R2 U2’ R' U2 R2 U' R'", "R U' R' U R U2 R2 U' R U R", "R U R' U R' U' R U R2 U R'", "(U2) R U R' U R' U' R2 U R", "(U) R U2 R' U R' U' R2 U R", "(U2) R' U2 R U2 R U' R U R'", "R U' R' U R' U' R U R", "(U') R U R' U R' U' R U' R U2 R", "(U2) R U R2 U' R U R2 U' R'", "R S' R U' R' f R' F' R U' R'", "(U) R' U' R U' R U R' U' R U2 R", "(U) R' U2 R' U2 R2 U2 R'", "(U2) R2 U2 R' U' R U' R2", "(U2) R U R' U R U' R'", "(U) R U2 R' U R U' R'", "R U2 R' U' R U R'", "(U) R U' R' U R U' R' U R U' R'"],
+            'RFU': [],
+            'FUR': [],
+            'DFR': [],
+            'RDF': [],
+            'FRD': []
         },
         'eo_pair': {
-
+            '':[],
         },
         'zbll': {
             'T1': ["(U') R U R' U R U2 R' U2 R' U' R U' R' U2 R", "R' U R U2 R' U' R U' R U R' U' R' U' R U R U' R'", "(U2) R' U2 R U R' U R2 U2 R' U' R U' R'", "R U2 R' U' R U' R2 U2 R U R' U R", "R' U R U2 R' U' R U2 R' U' R U' R' U R", "(U2) R U' R' U2 R U R' U2 R U R' U R U' R'", "R' U R2 U R' U R' U' R U' R' U' R U R U' R'", "(U') R U R' U R U' R' U R' U' R2 U' R2 U2 R", "(U2) R' U2 R U R' U R U' R' U' R U' R' U2 R", "R U2 R' U' R U' R' U R U R'U R U2 R'", "(U') R' U' R2 U R2 U R2 U2 R' U R' U R ", "(U') R U R2 U' R2 U' R2 U2 R U' R U' R'"],
