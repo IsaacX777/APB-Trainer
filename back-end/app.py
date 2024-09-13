@@ -255,10 +255,20 @@ def generateScramble(move_list):
     return invertScramble(solution.split(' '))
 
 def selectCase():
-    lxs = {}
-    lxs_algs = ["U2 R U R2 U' R' U R", "U R U2 R2 U' R' U R", "U' R U R U' R2 U' R2 U R2", "U2 R D' R U R' D R'", "U R' U2 R U2 R", "R' U' R U' R U2 R", "R' U2 R2 U R' U R2 U R'", "R U' R2 U' R U R U2 R U R'", "R2 U' R2 U2 R2 U R2", "R U' R' U R U' R2 U' R U R", "U' R' U' R U' R' U R2 U R", "R U' R2 U2 R U2 R2 U' R'", "R U2 R' U R' U2 R U2 R2 U' R'", "U2 R' U' R U R2 U R' U R U' R'", "R U' R' U R U2 R2 U' R U R", "R U R' U R' U' R U R2 U R'", "U2 R U R' U R' U' R2 U R", "U R U2 R' U R' U' R2 U R", "U2 R' U2 R U2 R U' R U R'", "R U' R' U R' U' R U R", "U' R U R' U R' U' R U' R U2 R", "U2 R U R2 U' R U R2 U' R'", "U R U2 R' U2 R' U2 R2 U2 R", "U R' U' R U' R U R' U' R U2 R", "U' R U' R' U R U' R' U R' U' R U R", "U2 R2 U2 R' U' R U' R2", "U2 R U R' U R U' R'", "U R U2 R' U R U' R'", "R U2 R' U' R U R'", "U R U' R' U R U' R' U R U' R'", "U' S' R U R' U R U R' S", "R U R' S R2 S' R2", "U R' U' R2 U' R' U R U' R' U R U R", "R' U' R U R U' R U R'", "R' U' R U D' R U' R' D R", "R' U2 R U2 R U2 R U R'", "U' R' U2 R U R U R", "U' R' U R U2 R2 U2 R' U' R", "U' R' U2 R' U R U R", "U' R' U' R U R", "U' R' U2 R2 U R' U R2 U' R'", "U2 R' U' R U R U2 R U R'", "U' R U' R2 U2 R U R U R", "U2 R' U' R U R2 U' R' U' R U R'", "U' R U' R2 U' R U R", "R' U2 R2 U2 R2 U' R'", "U2 R U' R' U R' U2 R U2 R2 U' R'", "R U R' S' U2 S", "U R' U' R2 U' R' U2 R2 U' R'", "U' R U2 R2 U' R U R", "U2 R' U2 R' U2 R2 U R'", "U' R U R2 U2 R U R U R", "R U R' U' S' U2 S", "U2 R' U2 R U R U' R' U R U R", "U' R U R2 U' R U R", "R2 D R' U2 R D' R' U R'", "U2 R U' R' U' R U R'", "R U R'", "U' R U' R' U R U R'", "U' R U2 R' U R U R'", "U' R U2 R' U R' U' R U R2 U' R'", "U' R U R' U R' U' R U R2 U' R'", "R' U' R U R2 U' R'", "D' R' D R2 U' R2 D' R D", "U' R' U2 R U R' U' R U2 R", "U' R' U' R U R U' R U' R' U R U' R'", "U' R U R' U2 R' U' R2 U R", "U2 R' U2 R2 U2 R", "U' R D' R U' R' D R'", "S R2' S' R2 U R U' R'", "U R' U' R U' R U R U R", "U' R U2 R' U R' U' R' U R", "U R' U' R2 U R", "U' R' U' R' U' R U2 R", "U2 R U R' U' R' U' R U R", "U R' U' R U R U R U R'", "U2 S R2' S' R3 U2' R'", "U' R U R' U R' U' R' U R", "U' R U' R' U2 R' U' R2 U R", "U R' U' R U D' R U R' D R", "R' U' R2 U' R' U R U R", "U' R U2 R' U2 R' U' R2 U R", "R' D' R2 U R U' R2 D", "R' U' R' U R", "R U2 R2 U2 R U2 R", "U R' F R U R U' R' F' R U2 R'", "U' R U2 R' U2 R U' R'", "U' R U R' U2 R U' R'", "U R U' R'", "U' R U' R' U2 R U' R'", "U R U' R2 U' R U R U' R U R'", "U S R2' S' R2", "U R U' D' R U' R' U D R'", "U2 R U2 R' U R D' R U' R' D R'", "U2 R U R' U2 R D' R U' R' D R'", "U R' U' R' U R U R U R'", "R U' R' U R U R' U R' U' R U R", "U' R' F' R U R U' R' F", "U R' U' R U R U' R' U' R U R", "U' R U2 R' U R' U' R U R", "R' U' R U R U' R U' R' U R U R'", "U' R' U' R U R2 U R'", "U2 R' U2 R U2 R2 U R'", "R' U2 R' U2 R2 U' R'", "R U2 R' U R U2 R2 U' R U R", "R U R' U' R U R'", "R U' R' U R U2 R' U R U' R'", "R U' R2 U' R' U R", "R U R2 U2 R U2 R", "R U' R2 D' R2 U R U' R2 D", "R U' R2 U' R U R2 U' R'", "U' R' D' R U R' U' D R2 U R", "U' R U' R' U R' U' R2 U R", "R U R' U' R U' R' U R' U' R U R", "U' R U' R' U R U' R'", "R U' R' U' R U R' U2 R U' R'"]
-    for i in range (0, len(lxs_algs)):
-        lxs[i] = lxs_algs[i]
+    lxs = {
+        'UFR': ["(U2) R U R2 U' R' U R", "(U) R U D' R U R' D R'", "(U') R U R U' R2 U' R2 U R2", "(U2) R D' R U R' D R'", "(U) R' U2 R U2 R", "R' U' R U' R U2 R", "(U) R U2 R2 U' R U R2 U' R'", "R U' R2 U' R U R U2 R U R'", "R2 U' R2 U2 R2 U R2", "R U' R' U R U' R2 U' R U R", "(U') R' U' R U' R' U R2 U R", "R U' R2 U2 R U2 R2 U' R'", "R U2 R' U R' U2 R U2 R2 U' R'", "R U R2 U2’ R' U2 R2 U' R'", "R U' R' U R U2 R2 U' R U R", "R U R' U R' U' R U R2 U R'", "(U2) R U R' U R' U' R2 U R", "(U) R U2 R' U R' U' R2 U R", "(U2) R' U2 R U2 R U' R U R'", "R U' R' U R' U' R U R", "(U') R U R' U R' U' R U' R U2 R", "(U2) R U R2 U' R U R2 U' R'", "R S' R U' R' f R' F' R U' R'", "(U) R' U' R U' R U R' U' R U2 R", "(U) R' U2 R' U2 R2 U2 R'", "(U2) R2 U2 R' U' R U' R2", "(U2) R U R' U R U' R'", "(U) R U2 R' U R U' R'", "R U2 R' U' R U R'", "(U) R U' R' U R U' R' U R U' R'"],
+        'RFU': [],
+        'FUR': [],
+        'DFR': [],
+        'RDF': [],
+        'FRD': []
+    }
+    selectedLXS = ['UFR']
+    combined_LXS_cases = []
+    for alg_set in selectedLXS:
+        combined_LXS_cases += lxs[alg_set]
+        
+    lxs_case = combined_LXS_cases[random.randint(0, len(combined_LXS_cases) - 1)]
     
     zbll = {
         "T1": ["(U') R U R' U R U2 R' U2 R' U' R U' R' U2 R", "R' U R U2 R' U' R U' R U R' U' R' U' R U R U' R'", "(U2) R' U2 R U R' U R2 U2 R' U' R U' R'", "R U2 R' U' R U' R2 U2 R U R' U R", "R' U R U2 R' U' R U2 R' U' R U' R' U R", "(U2) R U' R' U2 R U R' U2 R U R' U R U' R'", "R' U R2 U R' U R' U' R U' R' U' R U R U' R'", "(U') R U R' U R U' R' U R' U' R2 U' R2 U2 R", "(U2) R' U2 R U R' U R U' R' U' R U' R' U2 R", "R U2 R' U' R U' R' U R U R'U R U2 R'", "(U') R' U' R2 U R2 U R2 U2 R' U R' U R ", "(U') R U R2 U' R2 U' R2 U2 R U' R U' R'"],
@@ -271,7 +281,6 @@ def selectCase():
     allowedZbll = ['T1', 'T2', 'T3', 'T4']
     test = zbll[allowedZbll[random.randint(0, len(allowedZbll) - 1)]][random.randint(0, 11)]
     
-    lxs_case = lxs[random.randint(0, 115)]
     print(lxs_case)
     move_list = invertScramble(test.split(' ')) + invertScramble(lxs_case.split(' '))
     scramble = generateScramble(move_list)
