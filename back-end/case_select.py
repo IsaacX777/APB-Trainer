@@ -345,5 +345,6 @@ def selectCase(algSet, selectedCases):
         lxs_alg = lxs_set[random.randint(0, len(lxs_set) - 1)]
         move_list = lxs_alg.split(' ') + invertScramble(case.split(' '))
     scramble = generateScramble(move_list)
+    image_link = "https://cube.rider.biz/visualcube.php?fmt=svg&size=150&pzl=3&stage=f2l&alg=" + ''.join(scramble)
 
-    return case, ''.join(scramble)
+    return case, ''.join(scramble), image_link
