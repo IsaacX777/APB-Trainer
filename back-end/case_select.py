@@ -5,12 +5,12 @@ def outerMove(cube, type, axis_list, face):
     axis_list_values = []
     for val in axis_list:
         axis_list_values.append(cube[val[0]][val[1]])
-    
+   
     face_list = [0, 1, 2, 5, 8, 7, 6, 3]
     face_list_values = []
     for val in face_list:
         face_list_values.append(cube[face][val])
-    
+   
     # 1 = normal, 2 = prime, 3 = double
     if(type == 1):
         for i in range (0, len(axis_list)):
@@ -51,7 +51,7 @@ def sliceMove(cube, type, slice_list):
     slice_list_values = []
     for val in slice_list:
         slice_list_values.append(cube[val[0]][val[1]])
-    
+   
     if(type == 1):
         for i in range (0, len(slice_list)):
             if(i + 3 > 11):
@@ -76,12 +76,12 @@ def invertScramble(move_list):
     move_list.reverse()
     for i in range(0, len(move_list)):
         move = move_list[i]
-        
+       
         # Account for unconventional notation
         move = move.replace("2'", '2')
         move = move.replace("3'", '')
         move = move.replace('3', "'")
-        
+       
         if "'" in move:
             move = move[:1]
         elif '2' not in move:
@@ -254,43 +254,46 @@ def generateScramble(move_list):
     solution = kociemba.solve(compressed_cube)
     return invertScramble(solution.split(' '))
 
-def selectCase():
-    lxs = {
+def selectCase(algSet, selectedCases):
+
+    # List of all available algorithms
+    algs = {
+        'lxs': {
         'UFR': ["(U2) R U R2 U' R' U R", "(U) R U D' R U R' D R'", "(U') R U R U' R2 U' R2 U R2", "(U2) R D' R U R' D R'", "(U) R' U2 R U2 R", "R' U' R U' R U2 R", "(U) R U2 R2 U' R U R2 U' R'", "R U' R2 U' R U R U2 R U R'", "R2 U' R2 U2 R2 U R2", "R U' R' U R U' R2 U' R U R", "(U') R' U' R U' R' U R2 U R", "R U' R2 U2 R U2 R2 U' R'", "R U2 R' U R' U2 R U2 R2 U' R'", "R U R2 U2’ R' U2 R2 U' R'", "R U' R' U R U2 R2 U' R U R", "R U R' U R' U' R U R2 U R'", "(U2) R U R' U R' U' R2 U R", "(U) R U2 R' U R' U' R2 U R", "(U2) R' U2 R U2 R U' R U R'", "R U' R' U R' U' R U R", "(U') R U R' U R' U' R U' R U2 R", "(U2) R U R2 U' R U R2 U' R'", "R S' R U' R' f R' F' R U' R'", "(U) R' U' R U' R U R' U' R U2 R", "(U) R' U2 R' U2 R2 U2 R'", "(U2) R2 U2 R' U' R U' R2", "(U2) R U R' U R U' R'", "(U) R U2 R' U R U' R'", "R U2 R' U' R U R'", "(U) R U' R' U R U' R' U R U' R'"],
         'RFU': [],
         'FUR': [],
         'DFR': [],
         'RDF': [],
         'FRD': []
+        },
+        'eo_pair': {
+
+        },
+        'zbll': {
+            'T1': ["(U') R U R' U R U2 R' U2 R' U' R U' R' U2 R", "R' U R U2 R' U' R U' R U R' U' R' U' R U R U' R'", "(U2) R' U2 R U R' U R2 U2 R' U' R U' R'", "R U2 R' U' R U' R2 U2 R U R' U R", "R' U R U2 R' U' R U2 R' U' R U' R' U R", "(U2) R U' R' U2 R U R' U2 R U R' U R U' R'", "R' U R2 U R' U R' U' R U' R' U' R U R U' R'", "(U') R U R' U R U' R' U R' U' R2 U' R2 U2 R", "(U2) R' U2 R U R' U R U' R' U' R U' R' U2 R", "R U2 R' U' R U' R' U R U R'U R U2 R'", "(U') R' U' R2 U R2 U R2 U2 R' U R' U R ", "(U') R U R2 U' R2 U' R2 U2 R U' R U' R'"],
+            'T2': ["(U) R U R' U R U R2 D' r U2 r' D R2 U R'", "(U) R' U' R U' R' U' R2 D r' U2 r D' R2 U' R", "(U2) R U' R2 D' r U2 r' D R2 U R'", "R' U R2 D r' U2 r D' R2 U' R", "R' U' R U2 R D R' U' R D' R2 U R U' R' U R", "(U') R U2 R' U' R U r' F r U2 R' r' F r", "R' U' R U R2 D' R U2 R' D R2 U2 R' U2 R", "(U) R U R' U' R U R2 D' R U' R' D R U2 R U' R'", "(U) R' D' R U' R' D R U' R U' R' U R U' R' U' R U R'", "R U' R' U R U R' U' R U R' U R' D' R U R' D R", "(U) R U R D R' U R D' R' U L' U R' U' L ", "(U2) R2 F R U R' U' R' F' R' U' R2 U2 R U2 R"],
+            'T3': ["R' U R U2 L' R' U R U' L ", "R' U2 R U R2 F R U R U' R' F' R", "(U2) R' U' R2 U R' F' R U R' U' R' F R2 U' R' U' R' U R", "(U2) r U' r U2 R' F R U2 r2 F", "(U') R' U' R' D' R U R' D R U2 R U R' U R", "R' U' R y R U R' U' R l U' R' U l'", "(U) L' U2 R U2 R' U2 L U R U R' U' R U' R'", "F U' R' U2 R U F' R' U' R U R' U R", "(U2) R' U' R U' R' U R F U' R' U2 R U F'", "R U R' U R U' R' U' L' U2 R U2 R' U2 L", "R' U2 R U R' U R F U R U2 R' U R U R' F'", "r' U' l' U2 R U' R' U2 l R U' R' U2 r"],
+            'T4': ["(U') l' U2 R' D2 R U2 R' D2 R2 x'", "R' U2 R U' R' F R U R' U' R' F' R U' R", "R' U2 R' D' R U2 R' D R' U R' U R U2 R'", "(U2) R U2 R D R' U2 R D' R U' R U' R' U2 R", "R' D' R U R' D R U2 R U2 R' U R U R'", "(U) R' U' R' D' R U R' D R U' R U' R' U2 R", "R' U R2 D R' U R D' R' U R' U' R U' R' U' R ", "(U2) R U' R2 D' R U' R' D R U' R U R' U R U R'", "(U) R' U' R U' F U' R' U R U F' R' U R", "R' D' R U R' D R2 U R' U2 R U' R' U' R U' R'", "(U2) F R U R' U' R U' R' U' R U R' F'", "(U') R U R' U2 R U' R' U2 R U' R2 F' R U R U' R' F"],
+            'T5': ["R U R D R' U' R D' R2", "(U') R U2 R' U2 R' F R U R U' R' F'", "(U2) R2 B2 R' U2 R' U2 R B2 R' U R U' R'", "(U') R' D' R U R' D R2 U' R' U R U R' U' R U R'", "(U') F' U' r' F2 r U' r' F' r F ", "(U') R U R' U' R U' R' L U' R U R' L'", "(U) R U R' U R U R' U2 L R U' R' U L'", "R' U' R U' R2' F' R U R U' R' F U R U' R' U2 R", "(U) R' U' R U R' U' R2 D R' U2 R D' R' U R' U R", "(U2) R U R D R' U2 R D' R' U' R' U R U' R' U' R U' R'", "(U2) F R U R' U' R' F' U2 R U R U' R2 U2 R", "(U') R U' R' U' R U R D R' U2 R D' R' U' R'"],
+            'T6': ["x' U' R' D R U R' D' R x", "(U) R U R' U' R' F' R U2 R U2 R' F", "R2 F2 R U2 R U2 R' F2 R U' R' U R", "(U') R D R' U' R D' R2 U R U' R' U' R U R' U' R", "(U) F U R U2 R' U R U R' F'", "R U R' U' R U' R'  U' F R U R' U' R' F' R", "(U) R' U' R U' R' U' R U2 L' R' U R U' L", "(U) F R U R' U' R U R' U' F' R U R' U' R' F R F'", "(U) R U R' U' R U R2 D' R U2 R' D R U' R U' R'", "R' U2 R F U' R' U R U F' R' U R", "(U) R' U2 R2 U R' U' R' U2 F' R U2 R U2 R' F", "(U') R' U R U R' U' R' D' R U2 R' D R U R"],
+        }
     }
-    selectedLXS = ['UFR']
-    combined_LXS_cases = []
-    for alg_set in selectedLXS:
-        combined_LXS_cases += lxs[alg_set]
-        
-    lxs_case = combined_LXS_cases[random.randint(0, len(combined_LXS_cases) - 1)]
-    
-    zbll = {
-        "T1": ["(U') R U R' U R U2 R' U2 R' U' R U' R' U2 R", "R' U R U2 R' U' R U' R U R' U' R' U' R U R U' R'", "(U2) R' U2 R U R' U R2 U2 R' U' R U' R'", "R U2 R' U' R U' R2 U2 R U R' U R", "R' U R U2 R' U' R U2 R' U' R U' R' U R", "(U2) R U' R' U2 R U R' U2 R U R' U R U' R'", "R' U R2 U R' U R' U' R U' R' U' R U R U' R'", "(U') R U R' U R U' R' U R' U' R2 U' R2 U2 R", "(U2) R' U2 R U R' U R U' R' U' R U' R' U2 R", "R U2 R' U' R U' R' U R U R'U R U2 R'", "(U') R' U' R2 U R2 U R2 U2 R' U R' U R ", "(U') R U R2 U' R2 U' R2 U2 R U' R U' R'"],
-        "T2": ["(U) R U R' U R U R2 D' r U2 r' D R2 U R'", "(U) R' U' R U' R' U' R2 D r' U2 r D' R2 U' R", "(U2) R U' R2 D' r U2 r' D R2 U R'", "R' U R2 D r' U2 r D' R2 U' R", "R' U' R U2 R D R' U' R D' R2 U R U' R' U R", "(U') R U2 R' U' R U r' F r U2 R' r' F r", "R' U' R U R2 D' R U2 R' D R2 U2 R' U2 R", "(U) R U R' U' R U R2 D' R U' R' D R U2 R U' R'", "(U) R' D' R U' R' D R U' R U' R' U R U' R' U' R U R'", "R U' R' U R U R' U' R U R' U R' D' R U R' D R", "(U) R U R D R' U R D' R' U L' U R' U' L ", "(U2) R2 F R U R' U' R' F' R' U' R2 U2 R U2 R"],
-        "T3": ["R' U R U2 L' R' U R U' L ", "R' U2 R U R2 F R U R U' R' F' R", "(U2) R' U' R2 U R' F' R U R' U' R' F R2 U' R' U' R' U R", "(U2) r U' r U2 R' F R U2 r2 F", "(U') R' U' R' D' R U R' D R U2 R U R' U R", "R' U' R y R U R' U' R l U' R' U l'", "(U) L' U2 R U2 R' U2 L U R U R' U' R U' R'", "F U' R' U2 R U F' R' U' R U R' U R", "(U2) R' U' R U' R' U R F U' R' U2 R U F'", "R U R' U R U' R' U' L' U2 R U2 R' U2 L", "R' U2 R U R' U R F U R U2 R' U R U R' F'", "r' U' l' U2 R U' R' U2 l R U' R' U2 r"],
-        "T4": ["(U') l' U2 R' D2 R U2 R' D2 R2 x'", "R' U2 R U' R' F R U R' U' R' F' R U' R", "R' U2 R' D' R U2 R' D R' U R' U R U2 R'", "(U2) R U2 R D R' U2 R D' R U' R U' R' U2 R", "R' D' R U R' D R U2 R U2 R' U R U R'", "(U) R' U' R' D' R U R' D R U' R U' R' U2 R", "R' U R2 D R' U R D' R' U R' U' R U' R' U' R ", "(U2) R U' R2 D' R U' R' D R U' R U R' U R U R'", "(U) R' U' R U' F U' R' U R U F' R' U R", "R' D' R U R' D R2 U R' U2 R U' R' U' R U' R'", "(U2) F R U R' U' R U' R' U' R U R' F'", "(U') R U R' U2 R U' R' U2 R U' R2 F' R U R U' R' F"],
-        "T5": ["R U R D R' U' R D' R2", "(U') R U2 R' U2 R' F R U R U' R' F'", "(U2) R2 B2 R' U2 R' U2 R B2 R' U R U' R'", "(U') R' D' R U R' D R2 U' R' U R U R' U' R U R'", "(U') F' U' r' F2 r U' r' F' r F ", "(U') R U R' U' R U' R' L U' R U R' L'", "(U) R U R' U R U R' U2 L R U' R' U L'", "R' U' R U' R2' F' R U R U' R' F U R U' R' U2 R", "(U) R' U' R U R' U' R2 D R' U2 R D' R' U R' U R", "(U2) R U R D R' U2 R D' R' U' R' U R U' R' U' R U' R'", "(U2) F R U R' U' R' F' U2 R U R U' R2 U2 R", "(U') R U' R' U' R U R D R' U2 R D' R' U' R'"],
-        "T6": ["x' U' R' D R U R' D' R x", "(U) R U R' U' R' F' R U2 R U2 R' F", "R2 F2 R U2 R U2 R' F2 R U' R' U R", "(U') R D R' U' R D' R2 U R U' R' U' R U R' U' R", "(U) F U R U2 R' U R U R' F'", "R U R' U' R U' R'  U' F R U R' U' R' F' R", "(U) R' U' R U' R' U' R U2 L' R' U R U' L", "(U) F R U R' U' R U R' U' F' R U R' U' R' F R F'", "(U) R U R' U' R U R2 D' R U2 R' D R U' R U' R'", "R' U2 R F U' R' U R U F' R' U R", "(U) R' U2 R2 U R' U' R' U2 F' R U2 R U2 R' F", "(U') R' U R U R' U' R' D' R U2 R' D R U R"],
-    }
-    allowedZbll = ['T1', 'T2', 'T3', 'T4']
-    test = zbll[allowedZbll[random.randint(0, len(allowedZbll) - 1)]][random.randint(0, 11)]
-    
-    print(lxs_case)
-    move_list = invertScramble(test.split(' ')) + invertScramble(lxs_case.split(' '))
+
+    # Randomly select a case from pool
+    case_pool = []
+    for sub_set in selectedCases:
+        case_pool += algs[algSet][sub_set]
+    case = case_pool[random.randint(0, len(case_pool) - 1)]
+   
+    # Determine scramble based on the selected algorithm set
+    if(algSet == 'lxs'):
+        zbll_set = algs['zbll'][random.randint(0, len(algs['zbll']) - 1)]
+        zbll_alg = zbll_set[random.randint(0, len(zbll_set) - 1)]
+        move_list = zbll_alg.split(' ') + invertScramble(case.split(' '))
+    elif(algSet == 'eo_pair'):
+        lxs_set = algs['lxs'][random.randint(0, len(algs['lxs']) - 1)]
+        lxs_alg = lxs_set[random.randint(0, len(lxs_set) - 1)]
+        move_list = lxs_alg.split(' ') + invertScramble(case.split(' '))
     scramble = generateScramble(move_list)
-    for move in scramble:
-        print(move, end=' ')
-        
-def testMove():
-    generateScramble(["S'"])
 
-selectCase()
-#testMove()
-
-    
+    return case, ''.join(scramble)
