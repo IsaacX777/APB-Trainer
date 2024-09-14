@@ -1,31 +1,24 @@
-'use client'
+import Navbar from "./navbar"
+import Defaultpage from "./default"
+import axios from "axios"
 
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Navbar from "./navbar";
-
-const Default = () => {
-  return(
-    <div>
-      <h1>Scramble:</h1>
-      <h1>Solution:</h1>
-      <img src='https://cube.rider.biz/visualcube.php?fmt=ico&size=150&pzl=3'/>
-      <div>
-        <button>Next Case</button>
-        <button>Show Solution</button>
-      </div>
-    </div>
-  );
+async function access(algSet: string, selectedCases: string){
+  var data = await axios.get(`http://127.0.0.1:5000/Fetch_Case/${algSet}/${selectedCases}`)
+  return data.data
 }
-const CaseSelect = () => <div className="p-4">Case Select</div>;
 
-export default function Home() {
-  return (
-    <Router>
+export default async function Home() {
+  try {
+    const data = await access('lxs', 'UFR')
+    console.log('Data received: ', data)
+  } catch (error) {
+    //console.log(error)
+  }
+
+  return(
+    <main>
       <Navbar/>
-      <Routes>
-        <Route path="/" element={<Default/>} />
-        <Route path="/case_select" element={<CaseSelect/>} />
-      </Routes>
-    </Router>
-  );
+      <Defaultpage/>
+    </main>
+  )
 }

@@ -1,28 +1,10 @@
 from generate_scramble import generateScramble, invertScramble
 import random
-from flask import Flask
+from flask import Flask, jsonify
 from flask_cors import CORS
 
-def selectCase(algSet, selectedCases):
-    # Randomly select a case from pool
-    case_pool = []
-    for sub_set in selectedCases:
-        case_pool += algs[algSet][sub_set]
-    case = case_pool[random.randint(0, len(case_pool) - 1)]
-   
-    # Determine scramble based on the selected algorithm set
-    if(algSet == 'lxs'):
-        zbll_set = algs['zbll'][zbll_sets[random.randint(0, len(algs['zbll']) - 1)]]
-        zbll_alg = zbll_set[random.randint(0, len(zbll_set) - 1)]
-        move_list = zbll_alg.split(' ') + invertScramble(case.split(' '))
-    elif(algSet == 'eo_pair'):
-        lxs_set = algs['lxs'][lxs_sets[random.randint(0, len(algs['lxs']) - 1)]]
-        lxs_alg = lxs_set[random.randint(0, len(lxs_set) - 1)]
-        move_list = lxs_alg.split(' ') + invertScramble(case.split(' '))
-    scramble = generateScramble(move_list)
-    image_link = "https://cube.rider.biz/visualcube.php?fmt=svg&size=150&pzl=3&stage=f2l&alg=" + ''.join(scramble)
-
-    return case, scramble, image_link
+app = Flask(__name__)
+CORS(app, resources={r'/Fetch_Case/*': {'origins': 'http://localhost:3000'}})
 
 # List of all available algorithms
 algs = {
@@ -88,9 +70,33 @@ algs = {
 }
 zbll_sets = list(algs['zbll'].keys())
 lxs_sets = list(algs['lxs'].keys())
-solution, scramble, image_link = selectCase('lxs', ['UFR'])
-print('scramble: ', end='')
-for move in scramble:
-    print(move, end=' ')
-print()
-print('solution: ' + solution)
+
+@app.route('/Fetch_Case/<algSet>/<selectedCases>', methods=['GET'])
+def selectCase(algSet, selectedCases):
+    # Randomly select a case from pool
+    case_pool = []
+    for sub_set in selectedCases.split(','):
+        case_pool += algs[algSet][sub_set]
+    case = case_pool[random.randint(0, len(case_pool) - 1)]
+   
+    # Determine scramble based on the selected algorithm set
+    if(algSet == 'lxs'):
+        zbll_set = algs['zbll'][zbll_sets[random.randint(0, len(algs['zbll']) - 1)]]
+        zbll_alg = zbll_set[random.randint(0, len(zbll_set) - 1)]
+        move_list = zbll_alg.split(' ') + invertScramble(case.split(' '))
+    elif(algSet == 'eo_pair'):
+        lxs_set = algs['lxs'][lxs_sets[random.randint(0, len(algs['lxs']) - 1)]]
+        lxs_alg = lxs_set[random.randint(0, len(lxs_set) - 1)]
+        move_list = lxs_alg.split(' ') + invertScramble(case.split(' '))
+    scramble = generateScramble(move_list)
+    image_link = "https://cube.rider.biz/visualcube.php?fmt=svg&size=150&pzl=3&stage=f2l&alg=" + ''.join(scramble)
+
+    # Return as a JSON response
+    return jsonify({
+        "case": case,
+        "scramble": scramble,
+        "image_link": image_link
+    })
+
+if __name__ == '__main__':
+    app.run(debug=True)

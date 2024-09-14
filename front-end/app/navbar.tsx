@@ -1,9 +1,5 @@
 'use client'
-import { Link } from "react-router-dom";
-
-interface NavbarProps {
-    onOpenOverlay: () => void;
-  }
+import Link from 'next/link'
 
 const Navbar = () => {
     return (
@@ -15,7 +11,7 @@ const Navbar = () => {
                         <option>LXS</option>
                         <option>EO Pair</option>
                     </select>
-                    <Link to="case_select" className="bg-blue-700 rounded-lg px-4 py-1">Select Cases</Link>
+                    <Link href="/caseselect" className="bg-blue-700 rounded-lg px-4 py-1">Select Cases</Link>
                 </div>
             </div>
         </nav>
