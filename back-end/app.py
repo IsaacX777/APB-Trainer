@@ -89,12 +89,12 @@ def selectCase(algSet, selectedCases):
         lxs_alg = lxs_set[random.randint(0, len(lxs_set) - 1)]
         move_list = lxs_alg.split(' ') + invertScramble(case.split(' '))
     scramble = generateScramble(move_list)
-    image_link = "https://cube.rider.biz/visualcube.php?fmt=svg&size=150&pzl=3&stage=f2l&alg=" + ''.join(scramble)
+    image_link = "https://cube.rider.biz/visualcube.php?fmt=ico&size=150&pzl=3&stage=f2l&alg=" + ''.join(scramble)
 
     # Return as a JSON response
     return jsonify({
-        "case": case,
         "scramble": scramble,
+        "case": case,
         "image_link": image_link
     })
 

@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 const Navbar = () => {
     return (
-        <nav className="bg-gray-800 p-4">
+        <nav className="bg-gray-800 p-2">
             <div className="container mx-auto flex justify-between">
                 <h1 className="text-center text-2xl text-white font-semibold">APB Trainer</h1>
                 <div className="space-x-4">
