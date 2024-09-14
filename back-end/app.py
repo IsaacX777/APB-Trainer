@@ -1,5 +1,7 @@
 from generate_scramble import generateScramble, invertScramble
 import random
+from flask import Flask
+from flask_cors import CORS
 
 def selectCase(algSet, selectedCases):
     # Randomly select a case from pool
@@ -10,17 +12,17 @@ def selectCase(algSet, selectedCases):
    
     # Determine scramble based on the selected algorithm set
     if(algSet == 'lxs'):
-        zbll_set = algs['zbll'][random.randint(0, len(algs['zbll']) - 1)]
+        zbll_set = algs['zbll'][zbll_sets[random.randint(0, len(algs['zbll']) - 1)]]
         zbll_alg = zbll_set[random.randint(0, len(zbll_set) - 1)]
         move_list = zbll_alg.split(' ') + invertScramble(case.split(' '))
     elif(algSet == 'eo_pair'):
-        lxs_set = algs['lxs'][random.randint(0, len(algs['lxs']) - 1)]
+        lxs_set = algs['lxs'][lxs_sets[random.randint(0, len(algs['lxs']) - 1)]]
         lxs_alg = lxs_set[random.randint(0, len(lxs_set) - 1)]
         move_list = lxs_alg.split(' ') + invertScramble(case.split(' '))
     scramble = generateScramble(move_list)
     image_link = "https://cube.rider.biz/visualcube.php?fmt=svg&size=150&pzl=3&stage=f2l&alg=" + ''.join(scramble)
 
-    return case, ''.join(scramble), image_link
+    return case, scramble, image_link
 
 # List of all available algorithms
 algs = {
@@ -84,6 +86,11 @@ algs = {
         'AS6': ["(U') R U2 R' U' F' R U R' U' R' F R2 U' R'", "(U') R' U2 R' D' R U R' D R2 U' R' U2 R", "(U2) R' U' R U' R2 D' r U2 r' D R2", "R U' R' U2 R U' R2 D' R U' R' D R", "(U) R U R' U' R2 U R U R' U' D R' U' R D' R", "(U2) R' U' R U' R2 D' R U2 R' D R2", "(U2) R U2 R' U2 L' U R U' R' L", "R' U2 R' D' R U2 R' D R U' R U' R' U2 R", "R' U' R U R' F R U R' U' R' F' R2", "(U) R U2 R D' R U' R' D R U R U' R U' R'", "(U) R U R' U R' F U' R2 U' R2 U F' U R", "(U') R U R' U R' U' R2 U' R D' R U R' D R U R"]
     }
 }
+zbll_sets = list(algs['zbll'].keys())
+lxs_sets = list(algs['lxs'].keys())
 solution, scramble, image_link = selectCase('lxs', ['UFR'])
-print('scramble: ' + scramble)
+print('scramble: ', end='')
+for move in scramble:
+    print(move, end=' ')
+print()
 print('solution: ' + solution)
