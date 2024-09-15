@@ -3,7 +3,6 @@ import {fetchCase} from './page'
 import { useState } from 'react'
 import CaseSelect from './caseselect'
 import Navbar from './navbar'
-import {AppProvider} from "./context"
 import { useAppContext } from './context'
 
 interface DefaultPageProps {
@@ -17,7 +16,7 @@ const DefaultPage: React.FC<DefaultPageProps> = ({ getScramble, getSolution, get
   const [solution, setSolution] = useState(getSolution)
   const [link, setLink] = useState(getLink)
   const [solutionDisplay, setSolutionDisplay] = useState(false);
-  const {selection, cases, setCases} = useAppContext()
+  const {selection, cases} = useAppContext()
 
   const nextCase = async () => {
     try {
@@ -53,7 +52,7 @@ const DefaultPage: React.FC<DefaultPageProps> = ({ getScramble, getSolution, get
   }
 
   return(
-    <AppProvider>
+    <main>
       <Navbar/>
       <h1 className='text-center text-xl my-3'>{scramble}</h1>
       <div className='flex justify-center my-3'>
@@ -65,7 +64,7 @@ const DefaultPage: React.FC<DefaultPageProps> = ({ getScramble, getSolution, get
       </div>
       {solutionDisplay && (<h1 className='text-center text-xl my-3'>{solution}</h1>)}
       <CaseSelect/>
-    </AppProvider>
+    </main>
   )
 }
 

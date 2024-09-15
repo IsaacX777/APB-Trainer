@@ -8,19 +8,9 @@ export async function fetchCase(algSet: string, selectedCases: string){
 }
 
 export default async function Home() {
-  var data;
-  try {
-    data = await fetchCase('lxs', 'UFR,0')
-    //console.log('Data received: ', data)
-  } catch (error) {
-    console.log(error)
-  }
-  var scramble_list = data.scramble
-  var scramble = scramble_list.join(' ');
-
   return(
     <main>
-      <Parent getScramble={scramble} getSolution={data.case} getLink={data.image_link}/>
+      <Parent getScramble='Scramble' getSolution='' getLink='https://cube.rider.biz/visualcube.php?fmt=ico&size=150&pzl=3&stage=f2l'/>
     </main>
   )
 }

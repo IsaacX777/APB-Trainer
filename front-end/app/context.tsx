@@ -3,10 +3,19 @@ import { createContext, useContext, useState, ReactNode } from 'react';
 const defaultCases: Map<string, Map<string, number[]>> = new Map([
   ['lxs', new Map([
     ['UFR', Array.from({ length: 30 }, (_, i) => i)],
-    ['RFU', []]
+    ['RFU', Array.from({ length: 30 }, (_, i) => i)],
+    ['FUR', Array.from({ length: 30 }, (_, i) => i)],
+    ['DFR', Array.from({ length: 8 }, (_, i) => i)],
+    ['RDF', Array.from({ length: 9 }, (_, i) => i)],
+    ['FRD', Array.from({ length: 9 }, (_, i) => i)]
   ])],
   ['eo_pair', new Map([
-    ['dBR', [1]]
+    ['dBR', Array.from({ length: 11 }, (_, i) => i)],
+    ['dFR', Array.from({ length: 11 }, (_, i) => i)],
+    ['OU', Array.from({ length: 31 }, (_, i) => i)],
+    ['OR', Array.from({ length: 31 }, (_, i) => i)],
+    ['MU', Array.from({ length: 32 }, (_, i) => i)],
+    ['MR', Array.from({ length: 32 }, (_, i) => i)]
   ])]
 ]);
 
