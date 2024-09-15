@@ -8,13 +8,13 @@ import { useAppContext } from './context'
 interface DefaultPageProps {
   getScramble: string;
   getSolution: string;
-  getLink: string;
+  getDirectory: string;
 }
 
-const DefaultPage: React.FC<DefaultPageProps> = ({ getScramble, getSolution, getLink }) => {
+const DefaultPage: React.FC<DefaultPageProps> = ({ getScramble, getSolution, getDirectory }) => {
   const [scramble, setScramble] = useState(getScramble)
   const [solution, setSolution] = useState(getSolution)
-  const [link, setLink] = useState(getLink)
+  const [directory, setDirectory] = useState(getDirectory)
   const [solutionDisplay, setSolutionDisplay] = useState(false);
   const {selection, cases} = useAppContext()
 
@@ -33,7 +33,7 @@ const DefaultPage: React.FC<DefaultPageProps> = ({ getScramble, getSolution, get
       }
 
       var data = await fetchCase(selection, selectedCases)
-      //console.log('Data received: ', data)
+      console.log('Data received: ', data)
 
       var scramble_list = data.scramble
       var scramble = scramble_list.join(' ');
@@ -41,7 +41,7 @@ const DefaultPage: React.FC<DefaultPageProps> = ({ getScramble, getSolution, get
       setSolutionDisplay(false)
       setScramble(scramble)
       setSolution(data.case)
-      setLink(data.image_link)
+      setDirectory(data.image_directory)
     } catch (error) {
       console.log(error)
     }
@@ -56,7 +56,7 @@ const DefaultPage: React.FC<DefaultPageProps> = ({ getScramble, getSolution, get
       <Navbar/>
       <h1 className='text-center text-xl my-3'>{scramble}</h1>
       <div className='flex justify-center my-3'>
-        <img className='object-center' src={link}/>
+        <img className='object-center' src={directory}/>
       </div>
       <div className='space-x-4 flex justify-center my-3'>
         <button onClick={nextCase} className="bg-blue-700 w-40 rounded-lg px-4 py-1">Next Case</button>

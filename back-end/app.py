@@ -80,12 +80,17 @@ lxs_sets = list(algs['lxs'].keys())
 def selectCase(algSet, selectedCases):
     # Randomly select a case from pool
     case_pool = []
+    indices = []
     for sub_set in selectedCases.split(';'):
         sub_set_list = sub_set.split(',')
         sub_set_name = sub_set_list.pop(0)
         for index in sub_set_list:
             case_pool.append(algs[algSet][sub_set_name][int(index)])
-    case = case_pool[random.randint(0, len(case_pool) - 1)]
+            indices.append((index, sub_set_name))
+    selection = random.randint(0, len(case_pool) - 1)
+    case = case_pool[selection]
+    index = indices[selection][0]
+    sub_set_name = indices[selection][1]
    
     # Determine scramble based on the selected algorithm set
     if(algSet == 'lxs'):
@@ -97,13 +102,13 @@ def selectCase(algSet, selectedCases):
         lxs_alg = lxs_set[random.randint(0, len(lxs_set) - 1)]
         move_list = lxs_alg.split(' ') + invertScramble(case.split(' '))
     scramble = generateScramble(move_list)
-    image_link = "https://cube.rider.biz/visualcube.php?fmt=ico&size=150&pzl=3&stage=f2l&alg=" + ''.join(scramble) if algSet == 'lxs' else "https://cube.rider.biz/visualcube.php?fmt=ico&size=150&pzl=3&stage=els&alg=" + ''.join(scramble)
+    image_directory = f'/{algSet}/{sub_set_name}/{index}.png'
 
     # Return as a JSON response
     return jsonify({
         "scramble": scramble,
         "case": case,
-        "image_link": image_link
+        "image_directory": image_directory
     })
 
 if __name__ == '__main__':

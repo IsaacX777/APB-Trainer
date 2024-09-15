@@ -5,14 +5,14 @@ import DefaultPage from "./default";
 interface ParentProps {
   getScramble: string;
   getSolution: string;
-  getLink: string;
+  getDirectory: string;
 }
 
-const Parent: React.FC<ParentProps> = ({ getScramble, getSolution, getLink }) => {
+const Parent: React.FC<ParentProps> = ({ getScramble, getSolution, getDirectory }) => {
   
   return(
     <AppProvider>
-        <DefaultPage getScramble={getScramble} getSolution={getSolution} getLink={getLink}/>
+        <DefaultPage getScramble={getScramble} getSolution={getSolution} getDirectory={getDirectory}/>
     </AppProvider>
   )
 }

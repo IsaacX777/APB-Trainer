@@ -10,7 +10,7 @@ export async function fetchCase(algSet: string, selectedCases: string){
 export default async function Home() {
   return(
     <main>
-      <Parent getScramble='Scramble' getSolution='' getLink='https://cube.rider.biz/visualcube.php?fmt=ico&size=150&pzl=3&stage=f2l'/>
+      <Parent getScramble='Scramble' getSolution='' getDirectory='/lxs/default.png'/>
     </main>
   )
 }
