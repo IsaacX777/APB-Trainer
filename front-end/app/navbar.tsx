@@ -1,18 +1,17 @@
 'use client'
-import Link from 'next/link'
+import {useAppContext} from "./context"
 
 const Navbar = () => {
+    const {selection, setSelection} = useAppContext()
+
     return (
         <nav className="bg-gray-800 p-2">
             <div className="container mx-auto flex justify-between">
                 <h1 className="text-center text-2xl text-white font-semibold">APB Trainer</h1>
-                <div className="space-x-4">
-                    <select className="bg-black w-32 h-8">
-                        <option>LXS</option>
-                        <option>EO Pair</option>
-                    </select>
-                    <Link href="/caseselect" className="bg-blue-700 rounded-lg px-4 py-1">Select Cases</Link>
-                </div>
+                <select value={selection} onChange={(e) => setSelection(e.target.value)} className="bg-black w-32 h-8">
+                    <option value="lxs">LXS</option>
+                    <option value="eo_pair">EO Pair</option>
+                </select>
             </div>
         </nav>
     );
