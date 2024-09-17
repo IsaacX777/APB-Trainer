@@ -5,6 +5,100 @@ from PIL import Image
 import requests
 from io import BytesIO
 import numpy as np
+from generate_scramble import executeAlg, invertScramble
+
+def generateCube(move_list, dFR):
+    cube = [['U', 'U', 'U', 'U', 'U', 'U', 'U', 'U', 'U'],
+            ['R', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R'],
+            ['F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F'],
+            ['D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D'],
+            ['L', 'L', 'L', 'L', 'L', 'L', 'L', 'L', 'L'],
+            ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B']]
+    cube = executeAlg(cube, move_list)
+
+    cube[0][0] = 'n'
+    cube[4][0] = 'n'
+    cube[5][2] = 'n'
+    
+    cube[0][6] = 'n'
+    cube[4][2] = 'n'
+    cube[2][0] = 'n'
+    
+    if(cube[4][1] == 'U' or cube[4][1] == 'D' or (cube[4][1] == 'F' and cube[0][3] != 'U')):
+        cube[0][3] = 'o'
+        cube[4][1] = 'o'
+    else:
+        cube[0][3] = 'n'
+        cube[4][1] = 'n'
+    
+    if(set != 'MU'):
+        if(cube[5][1] == 'U' or cube[5][1] == 'D' or (cube[5][1] == 'F' and cube[0][1] != 'U')):
+            cube[0][1] = 'o'
+            cube[5][1] = 'o'
+        else:
+            cube[0][1] = 'n'
+            cube[5][1] = 'n'
+            
+    if(set != 'OU'):
+        if(cube[2][1] == 'U' or cube[2][1] == 'D' or (cube[2][1] == 'F' and cube[0][7] != 'U')):
+            cube[0][7] = 'o'
+            cube[2][1] = 'o'
+        else:
+            cube[0][7] = 'n'
+            cube[2][1] = 'n'
+            
+    if(set != 'MU' and set != 'MR'):
+        cube[0][2] = 'n'
+        cube[1][2] = 'n'
+        cube[5][0] = 'n'
+        
+    if(set != 'OU' and set != 'OR'):
+        cube[0][8] = 'n'
+        cube[1][0] = 'n'
+        cube[2][2] = 'n'
+        
+    if(cube[1][1] == 'U' or cube[1][1] == 'D' or (cube[1][1] == 'F' and cube[0][5] != 'U')):
+        cube[0][5] = 'o'
+        cube[1][1] = 'o'
+    else:
+        cube[0][5] = 'n'
+        cube[1][1] = 'n'
+        
+    if(set != 'dFR'):
+        cube[1][6] = 'n'
+        cube[2][8] = 'n'
+        cube[3][2] = 'n'
+        if(cube[1][3] == 'U' or cube[1][3] == 'D' or (cube[1][3] == 'F' and cube[2][5] != 'U')):
+            cube[1][3] = 'o'
+            cube[2][5] = 'o'
+        else:
+            cube[1][3] = 'n'
+            cube[2][5] = 'n'
+            
+    if(set != 'dBR' and set != 'MR'):
+        if(cube[1][5] == 'U' or cube[1][5] == 'D' or (cube[1][5] == 'F' and cube[5][3] != 'U')):
+            cube[1][5] = 'o'
+            cube[5][3] = 'o'
+        else:
+            cube[1][5] = 'n'
+            cube[5][3] = 'n'
+            
+    if(set != 'dBR'):
+        cube[1][8] = 'n'
+        cube[3][8] = 'n'
+        cube[5][6] = 'n'
+        
+    if(cube[1][7] == 'U' or cube[1][7] == 'D' or (cube[1][7] == 'F' and cube[3][5] != 'U')):
+        cube[1][7] = 'o'
+        cube[3][5] = 'o'
+    else:
+        cube[1][7] = 'n'
+        cube[3][5] = 'n'
+
+    compressed_cube = ''
+    for face in cube:
+        compressed_cube += ''.join(face)
+    return compressed_cube
     
 algs = {
     'lxs': {
@@ -33,9 +127,7 @@ for set in algs['lxs']:
     for i, alg in enumerate(algs['lxs'][set]):
         image_filename = f'{set_dir}/{i}.png'
         
-        if os.path.isfile(image_filename):
-            print(True)
-        else:
+        if not os.path.isfile(image_filename):
             image_url = f'https://cube.rider.biz/visualcube.php?fmt=ico&size=150&pzl=3&stage=f2l&case={alg}'
             response = requests.get(image_url)
 
@@ -58,10 +150,11 @@ for set in algs['eo_pair']:
     for i, alg in enumerate(algs['eo_pair'][set]):
         image_filename = f'{set_dir}/{i}.png'
         
-        if os.path.isfile(image_filename):
-            print(True)
-        else:
-            image_url = f'https://cube.rider.biz/visualcube.php?fmt=ico&size=150&pzl=3&stage=els&case={alg}'
+        if not os.path.isfile(image_filename):
+            cube_string = generateCube(invertScramble(alg.split(' ')), set)
+            
+            image_url = f'https://cube.rider.biz/visualcube.php?fmt=ico&size=150&pzl=3&fd={cube_string.lower()}'
+            print(image_url)
             response = requests.get(image_url)
 
             if response.status_code == 200:
