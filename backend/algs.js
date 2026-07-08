@@ -64,4 +64,7 @@ const zbll = {
     'AS6': ["(U') R U2 R' U' F' R U R' U' R' F R2 U' R'", "(U') R' U2 R' D' R U R' D R2 U' R' U2 R", "(U2) R' U' R U' R2 D' r U2 r' D R2", "R U' R' U2 R U' R2 D' R U' R' D R", "(U) R U R' U' R2 U R U R' U' D R' U' R D' R", "(U2) R' U' R U' R2 D' R U2 R' D R2", "(U2) R U2 R' U2 L' U R U' R' L", "R' U2 R' D' R U2 R' D R U' R U' R' U2 R", "R' U' R U R' F R U R' U' R' F' R2", "(U) R U2 R D' R U' R' D R U R U' R U' R'", "(U) R U R' U R' F U' R2 U' R2 U F' U R", "(U') R U R' U R' U' R2 U' R D' R U R' D R U R"]
 }
 
-export {lxs, eo_pair, zbll}
+const zbll_sets = Object.keys(zbll)
+const lxs_sets = Object.keys(lxs)
+
+export {lxs, eo_pair, zbll, zbll_sets, lxs_sets}

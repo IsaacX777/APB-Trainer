@@ -1,8 +1,10 @@
-import generateScramble from './generate-scramble.js';
+import { initialize, generateLXS, generateEO } from './generate-scramble.js';
 import express from 'express';
 
 const app = express();
 const port = 8000;
+
+await initialize();
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
