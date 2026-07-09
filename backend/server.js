@@ -15,6 +15,10 @@ app.listen(port, () => {
   console.log(`Server started on port ${port}`);
 });
 
+app.get('/', (req, res) => {
+  res.send('API for APB Trainer');
+});
+
 app.get('/lxs/:set/:id', (req, res) => {
   const { set, id } = req.params;
 

@@ -31,7 +31,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <Navbar />
           <main className="flex-1">{children}</main>
-          <Footer />
+          {/*<Footer />*/}
         </ThemeProvider>
       </body>
     </html>
