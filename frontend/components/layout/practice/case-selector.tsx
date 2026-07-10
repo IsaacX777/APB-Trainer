@@ -15,7 +15,7 @@ export default function CaseSelector({
 }) {
 
     const subsets = set === "lxs" ? Object.keys(lxs_sizes) : Object.keys(eo_pair_sizes);
-    const { theme } = useTheme()
+    const { resolvedTheme } = useTheme()
     const [selectedSubset, setSelectedSubset] = useState<string>(subsets[0])
 
     function handleCaseClick(subset: string, index: number) {
@@ -53,7 +53,7 @@ export default function CaseSelector({
                                 onClick={() => handleCaseClick(subset, index)}
                                 className={`${selectedCases[subset][index] ? "ring" : ""} rounded-md p-1 aspect-square`}
                                 >
-                                    <img src={`/images/${theme}/${set}/${subset}/${index}.png`} alt={`Case ${index}`}/>
+                                    <img src={`/images/${resolvedTheme}/${set}/${subset}/${index}.png`} alt={`Case ${index}`}/>
                                 </button>
                             ))}
                         </div>

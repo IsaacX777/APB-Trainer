@@ -12,13 +12,13 @@ export default function CaseDisplay({
     index: number | null
 }) {
 
-    const { theme } = useTheme()
+    const { resolvedTheme } = useTheme()
 
     if(scramble) {
         return (
             <div className="items-center justify-center flex flex-col space-y-4 mb-4">
                 <p className="text-lg">{scramble}</p>
-                <img src={`/images/${theme}/${set}/${subset}/${index}.png`} alt={`Case ${index}`} />
+                <img src={`/images/${resolvedTheme}/${set}/${subset}/${index}.png`} alt={`Case ${index}`} />
             </div>
         )
     } else {

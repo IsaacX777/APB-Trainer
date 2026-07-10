@@ -15,7 +15,7 @@ import { useTheme } from "next-themes"
 
 export default function Navbar() {
 
-  const { theme, setTheme } = useTheme()
+  const { resolvedTheme, setTheme } = useTheme()
 
   return (
     <nav className="p-8">
@@ -57,7 +57,7 @@ export default function Navbar() {
               </NavigationMenuLink>
             </NavigationMenuContent>
           </NavigationMenuItem>
-          <Button variant="outline" className="ml-6" onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
+          <Button variant="outline" className="ml-6" onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}>
             <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
             <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
           </Button>
