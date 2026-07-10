@@ -21,7 +21,12 @@ export default function Navbar() {
     <nav className="p-8">
       <NavigationMenu>
         <NavigationMenuList>
-          <h1 className="font-bold mr-6">APB Trainer v2</h1>
+          <NavigationMenuLink 
+          className="font-bold mr-6 text-xl"
+          render={<Link href="/"/>}
+          >
+            APB Trainer v2
+          </NavigationMenuLink>
           <NavigationMenuItem>
             <NavigationMenuTrigger>Learn</NavigationMenuTrigger>
             <NavigationMenuContent>
@@ -34,11 +39,6 @@ export default function Navbar() {
                 render={<Link href="/learn/eo-pair-algorithms" />}
               >
                 EO Pair Algorithms
-              </NavigationMenuLink>
-              <NavigationMenuLink
-                render={<Link href="/learn/resources" />}
-              >
-                Resources
               </NavigationMenuLink>
             </NavigationMenuContent>
           </NavigationMenuItem>

@@ -1,5 +1,7 @@
+import Cases from "@/components/layout/learn/cases";
+
 export default function Page() {
     return (
-        <div>lxs</div>
+        <Cases set="lxs" />
     );
 }

@@ -3,7 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 
 import Navbar from "../components/layout/navbar";
-import Footer from "../components/layout/footer"
 import { ThemeProvider } from "@/components/theme-provider";
 
 const inter = Inter({
@@ -31,7 +30,6 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <Navbar />
           <main className="flex-1">{children}</main>
-          {/*<Footer />*/}
         </ThemeProvider>
       </body>
     </html>

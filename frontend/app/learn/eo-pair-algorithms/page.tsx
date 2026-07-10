@@ -1,5 +1,7 @@
+import Cases from "@/components/layout/learn/cases";
+
 export default function Page() {
     return (
-        <div>eo</div>
+        <Cases set="eo_pair" />
     );
 }
